@@ -9,3 +9,9 @@ alter table departamento
 
 alter table departamento
 	change column nome nome varchar(25) not null; 
+    
+alter table cliente
+	add column idade int null;
+    
+alter table cliente
+	add column pontuacao int not null;
