@@ -108,6 +108,11 @@ VALUES
     ("333.333.333-39", "PE", "Recife", "Santo Amaro", "Rua do Progresso", 567, null, "50040-200"),
     ("444.444.444-40", "PE", "Paulista", "Janga", "Rua da Liberdade", 101, "Casa 2", "53410-210");
         
+-- Comando SQL: DML UPDATE
+update cliente
+	set pontuacao = 300
+		where cpf = "111.321.456-00";
+
         
         
         
