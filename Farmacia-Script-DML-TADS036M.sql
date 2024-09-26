@@ -65,6 +65,48 @@ VALUES
     ("333.333.333-39", "Antônio Augusto Soares", 'M', "antonio.soares@pe.senac.br", "81993333039", "1997-09-30", 170),
     ("444.444.444-40", "Gabriela Marques Ferreira", 'F', "gabriela.ferreira@pe.senac.br", "81994444040", "2003-11-23", 100);
         
+INSERT INTO enderecocli (cliente_cpf, uf, cidade, bairro, rua, numero, comp, cep)
+VALUES
+    ("111.111.111-01", "PE", "Recife", "Boa Viagem", "Av. Domingos Ferreira", 1234, "Apt 301", "51020-031"),
+    ("222.222.222-02", "PE", "Olinda", "Carmo", "Rua 15 de Novembro", 567, null, "53010-030"),
+    ("333.333.333-03", "PE", "Jaboatão dos Guararapes", "Piedade", "Rua Aníbal Bruno", 234, "Casa 5", "54410-040"),
+    ("444.444.444-04", "PE", "Paulista", "Jardim Paulista", "Av. Presidente Kennedy", 765, null, "53401-120"),
+    ("555.555.555-05", "PE", "Camaragibe", "Aldeia", "Rua São Francisco", 89, "Bloco B", "54756-250"),
+    ("666.666.666-06", "PE", "Recife", "Espinheiro", "Rua 48", 1010, "Apt 402", "52020-070"),
+    ("777.777.777-07", "PE", "Olinda", "Rio Doce", "Rua Getúlio Vargas", 99, "Casa 3", "53220-060"),
+    ("888.888.888-08", "PE", "Jaboatão dos Guararapes", "Candeias", "Av. Presidente Castelo Branco", 321, "Apt 201", "54420-010"),
+    ("999.999.999-09", "PE", "Recife", "Graças", "Rua Amélia", 2345, "Casa", "52011-220"),
+    ("111.111.111-10", "PE", "Cabo de Santo Agostinho", "Centro", "Rua Vigário João Batista", 456, null, "54510-020"),
+    ("222.222.222-11", "PE", "Igarassu", "Centro", "Rua Barão de Igarassu", 789, "Casa 2", "53610-040"),
+    ("333.333.333-12", "PE", "Recife", "Madalena", "Rua Real da Torre", 555, null, "50610-000"),
+    ("444.444.444-13", "PE", "Olinda", "Bonsucesso", "Rua do Sol", 100, null, "53110-150"),
+    ("555.555.555-14", "PE", "Jaboatão dos Guararapes", "Barra de Jangada", "Av. Beira Mar", 777, "Bloco C", "54460-100"),
+    ("666.666.666-15", "PE", "Recife", "Casa Forte", "Av. 17 de Agosto", 1800, "Apt 704", "52060-420"),
+    ("777.777.777-16", "PE", "Olinda", "Jardim Atlântico", "Rua Carlos Gomes", 246, null, "53150-000"),
+    ("888.888.888-17", "PE", "Recife", "Boa Vista", "Rua do Hospício", 980, "Sala 2", "50050-100"),
+    ("999.999.999-18", "PE", "Paulista", "Paratibe", "Rua do Comércio", 127, "Casa 7", "53435-020"),
+    ("111.111.111-19", "PE", "Recife", "Tamarineira", "Rua Cônego Barata", 321, null, "52041-020"),
+    ("222.222.222-20", "PE", "Jaboatão dos Guararapes", "Piedade", "Rua Arão Lins", 432, null, "54410-090"),
+    ("333.333.333-21", "PE", "Recife", "Casa Amarela", "Rua Eurico Vitrúvio", 555, "Bloco A", "52070-030"),
+    ("444.444.444-22", "PE", "Cabo de Santo Agostinho", "Pontezinha", "Rua Pedro Álvares Cabral", 678, null, "54580-010"),
+    ("555.555.555-23", "PE", "Recife", "Aflitos", "Rua Barão de Contendas", 910, null, "52050-100"),
+    ("666.666.666-24", "PE", "Olinda", "Jardim Brasil", "Rua dos Navegantes", 100, "Casa 4", "53020-070"),
+    ("777.777.777-25", "PE", "Jaboatão dos Guararapes", "Cajueiro Seco", "Rua Belo Horizonte", 888, "Apt 102", "54330-200"),
+    ("888.888.888-26", "PE", "Recife", "Torre", "Av. Manoel Borba", 987, null, "50070-010"),
+    ("999.999.999-27", "PE", "Olinda", "Bairro Novo", "Av. Ministro Marcos Freire", 110, "Bloco D", "53130-000"),
+    ("111.111.111-28", "PE", "Recife", "Derby", "Rua do Príncipe", 345, null, "50070-130"),
+    ("222.222.222-29", "PE", "Jaboatão dos Guararapes", "Muribeca", "Rua do Sossego", 556, "Casa", "54340-010"),
+    ("333.333.333-30", "PE", "Camaragibe", "Timbi", "Rua dos Pescadores", 678, null, "54753-090"),
+    ("444.444.444-31", "PE", "Recife", "Boa Viagem", "Rua dos Navegantes", 123, "Apt 902", "51020-420"),
+    ("555.555.555-32", "PE", "Olinda", "Varadouro", "Rua da Aurora", 789, null, "53010-210"),
+    ("666.666.666-33", "PE", "Recife", "Imbiribeira", "Rua Barão de Souza Leão", 654, "Casa 3", "51111-200"),
+    ("777.777.777-34", "PE", "Paulista", "Maranguape", "Rua Marquês de Tamandaré", 102, null, "53401-050"),
+    ("888.888.888-35", "PE", "Recife", "Boa Vista", "Rua da Saudade", 207, "Apt 203", "50070-050"),
+    ("999.999.999-36", "PE", "Olinda", "Jardim Fragoso", "Rua Oscar Ferreira", 556, null, "53210-120"),
+    ("111.111.111-37", "PE", "Recife", "Espinheiro", "Rua do Futuro", 900, null, "52020-080"),
+    ("222.222.222-38", "PE", "Jaboatão dos Guararapes", "Candeias", "Rua Visconde de Suassuna", 233, "Bloco E", "54430-110"),
+    ("333.333.333-39", "PE", "Recife", "Santo Amaro", "Rua do Progresso", 567, null, "50040-200"),
+    ("444.444.444-40", "PE", "Paulista", "Janga", "Rua da Liberdade", 101, "Casa 2", "53410-210");
         
         
         
