@@ -113,7 +113,15 @@ update cliente
 	set pontuacao = 300
 		where cpf = "111.321.456-00";
 
+update cliente
+	set pontuacao = 350, idade = 21
+		where cpf = "333.321.456-00";
         
+update cliente
+	set pontuacao = pontuacao + 50
+		where sexo = 'F';
+		
+SET SQL_SAFE_UPDATES = 0;        
         
         
         
