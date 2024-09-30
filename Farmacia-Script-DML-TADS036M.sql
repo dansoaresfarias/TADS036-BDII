@@ -124,7 +124,47 @@ update cliente
 SET SQL_SAFE_UPDATES = 0;   
 
 update cliente
-	set pontuacao = pontuacao + 50;   
+	set pontuacao = pontuacao + 50;
+    
+update cliente
+	set idade = year(now()) - year(dataNasc);
+-- função de diferença de datas
+update cliente
+	set idade = timestampdiff(YEAR, dataNasc, now());
+
+update cliente
+	set pontuacao = rand(3) * 1000;
+
+-- Comando SQL: DML DELETE
+
+delete from cliente
+	where cpf = "123.321.456-00";
+
+delete from cliente
+	where cpf = "111.321.456-00";
+
+start transaction;
+delete from cliente
+	where cpf = "222.222.222-20";
+commit;
+
+start transaction;
+delete from cliente
+	where idade >= 30;
+rollback;
+
+start transaction;
+delete from cliente
+	where idade >= 20;
+rollback;
         
+start transaction;
+delete from cliente
+	where sexo = 'F';
+rollback;
+commit;
+
+
+
         
         
