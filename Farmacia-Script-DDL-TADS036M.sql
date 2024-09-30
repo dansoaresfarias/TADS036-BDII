@@ -491,6 +491,12 @@ CREATE TABLE IF NOT EXISTS `FarmaciaTADS036M`.`Trabalhar` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
+-- ALTER TABLE
+alter table cliente
+	add column idade int null;
+    
+alter table cliente
+	add column pontuacao int null;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
