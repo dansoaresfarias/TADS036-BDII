@@ -329,13 +329,60 @@ select * from relatoriofunc
 select * from relatoriofunc
 	where Departamento like "Frente%";
 
-select dep.nome "Departamento", count(trb.Funcionario_cpf) "Quantidade de Funcionários", 
-	grt.nome "Gerente"
+select dep.nome "Departamento", 
+	count(trb.Funcionario_cpf) "Quantidade de Funcionários", 
+    concat("R$ ", format(avg(func.salario), 2, 'de_DE')) "Média Salarial",
+    concat("R$ ", format(avg(func.comissao), 2, 'de_DE')) "Média das Comissões",
+    concat("R$ ", format(sum(func.salario + func.comissao), 2, 'de_DE')) "Investimento com Funcionário",
+	coalesce(grt.nome, "Não tem") "Gerente"
 	from departamento dep
 		inner join trabalhar trb on trb.Departamento_idDepartamento = dep.idDepartamento
+        inner join funcionario func on func.cpf = trb.Funcionario_cpf
         left join funcionario grt on grt.cpf = dep.Gerente_cpf
 			group by trb.Departamento_idDepartamento
 				order by dep.nome;
+
+-- "Data da Venda", "Valor Pago", "Cliente", "Vendedor"
+select date_format(vnd.dataVenda, '%d/%m/%Y - %H:%i') "Data da Venda",
+	concat("R$ ", format(vnd.valorTotal - coalesce(vnd.desconto, 0), 2, 'de_DE')) "Valor Pago",
+    cli.nome "Cliente",
+    func.nome "Vendedor"
+	from venda vnd
+		inner join cliente cli on cli.cpf = vnd.Cliente_cpf
+        inner join funcionario func on func.cpf = vnd.Funcionario_cpf
+			order by vnd.dataVenda;
+
+select func.nome "Vendedor", 
+	count(vnd.idVenda) "Quantidade de Vendas",
+	concat("R$ ", format(sum(vnd.valorTotal - coalesce(vnd.desconto, 0)), 2, 'de_DE')) "Faturamento"
+	from venda vnd
+        inner join funcionario func on func.cpf = vnd.Funcionario_cpf
+			group by func.cpf
+				order by sum(vnd.valorTotal - coalesce(vnd.desconto, 0)) desc;
+
+select func.nome "Vendedor", 
+	count(vnd.idVenda) "Quantidade de Vendas",
+	concat("R$ ", format(sum(vnd.valorTotal - coalesce(vnd.desconto, 0)), 2, 'de_DE')) "Faturamento"
+	from venda vnd
+        inner join funcionario func on func.cpf = vnd.Funcionario_cpf
+			where vnd.dataVenda between '2021-01-01' and '2021-03-31'
+				group by func.cpf
+					order by sum(vnd.valorTotal - coalesce(vnd.desconto, 0)) desc;
+
+select coalesce(endC.cidade, "Não informado") "Cidade", 
+	coalesce(endC.bairro, "Não informado") "Bairro", 
+	count(vnd.idVenda) "Quantidade de Vendas",
+	concat("R$ ", format(sum(vnd.valorTotal - coalesce(vnd.desconto, 0)), 2, 'de_DE')) "Faturamento"
+	from venda vnd
+        inner join cliente cli on cli.cpf = vnd.Cliente_cpf
+        left join enderecocli endC on endC.Cliente_cpf = cli.cpf
+			group by endC.cidade, endC.bairro
+				order by sum(vnd.valorTotal - coalesce(vnd.desconto, 0)) desc;
+
+
+
+
+
 
 
 
