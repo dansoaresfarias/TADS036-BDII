@@ -379,6 +379,46 @@ select coalesce(endC.cidade, "Não informado") "Cidade",
 			group by endC.cidade, endC.bairro
 				order by sum(vnd.valorTotal - coalesce(vnd.desconto, 0)) desc;
 
+select prod.nome "Produto", count(ivndProd.Venda_idVenda) "Frequência em Vendas" 
+	from itensvendaprod ivndProd
+		inner join produto prod on prod.idProduto = ivndProd.Produto_idProduto
+			group by ivndProd.Produto_idProduto
+				order by count(ivndProd.Venda_idVenda) desc
+					limit 10;
+
+select prod.nome "Produto", count(ivndProd.Venda_idVenda) "Frequência em Vendas",
+	sum(ivndProd.quantidade) "Quantidade Vendida", 
+    concat("R$ ", format(sum(ivndProd.quantidade*ivndProd.valorDeVenda), 2, 'de_DE')) "Faturamento por Produto"
+	from itensvendaprod ivndProd
+		inner join produto prod on prod.idProduto = ivndProd.Produto_idProduto
+			group by ivndProd.Produto_idProduto
+				order by sum(ivndProd.quantidade) desc
+					limit 10;
+
+select prod.nome "Produto", count(ivndProd.Venda_idVenda) "Frequência em Vendas",
+	sum(ivndProd.quantidade) "Quantidade Vendida", 
+    concat("R$ ", format(sum(ivndProd.quantidade*ivndProd.valorDeVenda), 2, 'de_DE')) "Faturamento por Produto"
+	from itensvendaprod ivndProd
+		inner join produto prod on prod.idProduto = ivndProd.Produto_idProduto
+			group by ivndProd.Produto_idProduto
+				order by sum(ivndProd.quantidade*ivndProd.valorDeVenda) desc
+					limit 10;
+ 
+select tipo "Tipo", count(Venda_idVenda) "Participação em Vendas",
+	concat("R$ ", format(sum(valorPago), 2, 'de_DE')) "Total R$"
+	from formapag
+		group by tipo
+			order by sum(valorPago) desc;
+
+select srv.nome "Serviço", count(ivndSrv.Venda_idVenda) "Frequência em Vendas",
+	sum(ivndSrv.quantidade) "Quantidade Vendida", 
+    concat("R$ ", format(sum(ivndSrv.quantidade*ivndSrv.valorVenda), 2, 'de_DE')) "Faturamento por Produto"
+	from itensvendaservico ivndSrv
+		inner join servico srv on srv.idServico = ivndSrv.Servico_idServico
+			group by ivndSrv.Servico_idServico
+				order by sum(ivndSrv.quantidade*ivndSrv.valorVenda) desc
+					limit 10;
+
 
 
 
