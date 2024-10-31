@@ -419,6 +419,48 @@ select srv.nome "Serviço", count(ivndSrv.Venda_idVenda) "Frequência em Vendas"
 				order by sum(ivndSrv.quantidade*ivndSrv.valorVenda) desc
 					limit 10;
 
+-- cpf, funcionario, salario(SB), comissao, aux alimentacao(550), aux saude(idade),
+-- aux escola(180*filho<=6), INSS, IRRF, salario liquido
+select func.cpf "CPF", upper(func.nome) "Funcionário",
+	concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário Bruto",
+    concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão",
+    concat("R$ ", format(550, 2, 'de_DE')) "Auxílio Alimentação",
+    calcAuxSaude(func.dataNasc) "Auxílio Saúde"
+	from funcionario func
+		order by func.nome;
+
+-- criando a função auxilio saude
+delimiter $$
+create function calcAuxSaude(dn date)
+	returns decimal(6,2) deterministic
+	begin
+		declare idade int;
+        declare auxSaude decimal(6,2) default 0.0;
+		select timestampdiff(year, dn, now()) into idade;
+        if idade <= 25 then set auxSaude = 250;
+			elseif idade>= 26 and idade <= 35 then set auxSaude = 350;
+            elseif idade>= 36 and idade <= 45 then set auxSaude = 450;
+            else set auxSaude = 550;
+		end if;
+        return auxSaude;
+    end $$
+delimiter ;
+
+-- cpf, funcionario, salario(SB), comissao, aux alimentacao(550), aux saude(idade),
+-- aux escola(180*filho<=6), INSS, IRRF, salario liquido
+select func.cpf "CPF", upper(func.nome) "Funcionário",
+	concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário Bruto",
+    concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão",
+    concat("R$ ", format(550, 2, 'de_DE')) "Auxílio Alimentação",
+    concat("R$ ", format(calcAuxSaude(func.dataNasc), 2, 'de_DE')) "Auxílio Saúde"
+	from funcionario func
+		order by func.nome;
+
+
+
+
+
+
 
 
 
