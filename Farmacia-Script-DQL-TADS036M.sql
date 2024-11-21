@@ -706,7 +706,7 @@ create procedure cadFuncionario(in pcpf varchar(14),
     end $$
 delimiter ;
 
-call cadProcedure("323.568.951-12", "Morgana Souza", "Morg", "morg.souza@gmail.com",
+call cadFuncionario("323.568.951-12", "Morgana Souza", "Morg", "morg.souza@gmail.com",
 	'F', "Divorciada", '2000-03-31', 30, 3200, 0, '2024-02-05', 'PE', "Recife",
     "Iputinga", "Rua Marechal Deodoro da Fonsceca", 56, "Casa B", "50030-070",
     "(81)996345658", "(81)986532124", null);
