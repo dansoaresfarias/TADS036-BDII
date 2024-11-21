@@ -712,9 +712,45 @@ call cadFuncionario("323.568.951-12", "Morgana Souza", "Morg", "morg.souza@gmail
     "(81)996345658", "(81)986532124", null);
 
 
+delimiter $$
+create procedure cadCliente(in pcpf varchar(14),
+							in pnome varchar(45),
+							in psexo char(1), 
+							in pemail varchar(45), 
+							in ptelefone varchar(15), 
+							in pdataNasc date,
+							in ppontuacao int,
+							in puf char(2), 
+							in pcidade varchar(60), 
+							in pbairro varchar(60), 
+							in prua varchar(70), 
+							in pnumero int, 
+							in pcomp varchar(45), 
+							in pcep varchar(9),
+							in pnumeroPS varchar(45),
+							in pnomePS varchar(45))
+	begin
+		select timestampdiff(year, pdataNasc, now()) into @idade;
+        insert into cliente
+			value (pcpf, pnome, psexo, pemail, ptelefone, pdataNasc, @idade, ppontuacao);
+		if(pcidade is not null) 
+			then insert into enderecocli 
+				value (pcpf, puf, pcidade, pbairro, prua, pnumero, pcomp, pcep);
+		end if;
+        if(pnumeroPS is not null)
+			then insert into planosaude
+				value(pcpf, pnumeroPS, pnomePS);
+		end if;        
+    end;
+delimiter ;
 
+call cadCliente("708.987.999-90", "Hadassa Gomes dos Santos", 'F', 
+	"doraaventureira@gmail.com", "(81)987455465", '2001-04-14', 100, "PE", "Recife",
+    "Imbiribeira", "Rua Macaco Botas", 105, null, null, null);
 
-
+call cadCliente("711.987.111-92", "Thayza Vitória", 'F', 
+	"thayzasilva@gmail.com", "(81)998521470", '2003-10-01', 120, "PE", "Recife",
+    "Santa Amaro", "Rua do Cemitério", 81, null, "32659825", "Unimed Recife");
 
 
 
