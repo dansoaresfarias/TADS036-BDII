@@ -663,3 +663,58 @@ create view vFolhaSalarial as
 		order by func.nome;
 
 select * from vfolhasalarial;
+
+delimiter $$
+create procedure cadFuncionario(in pcpf varchar(14),
+								in pnome varchar(60), 
+								in pnomeSocial varchar(45),
+								in pemail varchar(45), 
+								in psexo char(1), 
+								in pestadoCivil varchar(15), 
+								in pdataNasc date, 
+								in pch int, 
+								in psalario decimal(7,2),
+								in pcomissao decimal(6,2), 
+								in pdataAdm datetime,
+								in puf char(2), 
+								in pcidade varchar(60), 
+								in pbairro varchar(60), 
+								in prua varchar(70), 
+								in pnumero int, 
+								in pcomp varchar(45), 
+								in pcep varchar(9),
+								in pNumTel1 varchar(15),
+								in pNumTel2 varchar(15),
+								in pNumTel3 varchar(15))
+	begin
+		insert into funcionario (cpf, nome, nomeSocial, email, sexo, estadoCivil, 
+        dataNasc, ch, salario, comissao, dataAdm)
+			value(pcpf, pnome, pnomeSocial, pemail, psexo, pestadoCivil, 
+        pdataNasc, pch, psalario, pcomissao, pdataAdm);
+        insert into enderecofunc
+			value (pcpf, puf, pcidade, pbairro, prua, pnumero, pcomp, pcep);
+		insert into telefone (numero, funcionario_cpf)
+			value (pNumTel1, pcpf);
+		if (pNumTel2 is not null) 
+			then insert into telefone (numero, funcionario_cpf) 
+					value (pNumTel2, pcpf);
+		end if;
+        if (pNumTel3 is not null) 
+			then insert into telefone (numero, funcionario_cpf) 
+					value (pNumTel3, pcpf);
+		end if;
+    end $$
+delimiter ;
+
+call cadProcedure("323.568.951-12", "Morgana Souza", "Morg", "morg.souza@gmail.com",
+	'F', "Divorciada", '2000-03-31', 30, 3200, 0, '2024-02-05', 'PE', "Recife",
+    "Iputinga", "Rua Marechal Deodoro da Fonsceca", 56, "Casa B", "50030-070",
+    "(81)996345658", "(81)986532124", null);
+
+
+
+
+
+
+
+
