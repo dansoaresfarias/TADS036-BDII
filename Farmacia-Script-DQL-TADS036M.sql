@@ -711,6 +711,11 @@ call cadFuncionario("323.568.951-12", "Morgana Souza", "Morg", "morg.souza@gmail
     "Iputinga", "Rua Marechal Deodoro da Fonsceca", 56, "Casa B", "50030-070",
     "(81)996345658", "(81)986532124", null);
 
+alter table cliente
+	add column idade int null;
+    
+alter table cliente
+	add column pontuacao int null;
 
 delimiter $$
 create procedure cadCliente(in pcpf varchar(14),
@@ -741,16 +746,13 @@ create procedure cadCliente(in pcpf varchar(14),
 			then insert into planosaude
 				value(pcpf, pnumeroPS, pnomePS);
 		end if;        
-    end;
+    end $$
 delimiter ;
 
 call cadCliente("708.987.999-90", "Hadassa Gomes dos Santos", 'F', 
 	"doraaventureira@gmail.com", "(81)987455465", '2001-04-14', 100, "PE", "Recife",
-    "Imbiribeira", "Rua Macaco Botas", 105, null, null, null);
+    "Imbiribeira", "Rua Macaco Botas", 105, "Ap 1403", "50070-070", null, null);
 
 call cadCliente("711.987.111-92", "Thayza Vitória", 'F', 
 	"thayzasilva@gmail.com", "(81)998521470", '2003-10-01', 120, "PE", "Recife",
-    "Santa Amaro", "Rua do Cemitério", 81, null, "32659825", "Unimed Recife");
-
-
-
+    "Santa Amaro", "Rua do Cemitério", 81, null, "58070-080", "32659825", "Unimed Recife");
