@@ -756,3 +756,35 @@ call cadCliente("708.987.999-90", "Hadassa Gomes dos Santos", 'F',
 call cadCliente("711.987.111-92", "Thayza Vitória", 'F', 
 	"thayzasilva@gmail.com", "(81)998521470", '2003-10-01', 120, "PE", "Recife",
     "Santa Amaro", "Rua do Cemitério", 81, null, "58070-080", "32659825", "Unimed Recife");
+
+delimiter $$
+create trigger trg_aft_insert_itensvendaprod after insert
+on itensvendaprod
+for each row
+	begin
+		update produto
+			set quantidade = quantidade - new.quantidade
+				where idProduto = new.Produto_idProduto;
+		update venda
+			set valorTotal = valorTotal + (new.valorDeVenda * new.quantidade) - new.descontoProd
+				where idVenda = new.Venda_idVenda;
+    end $$
+delimiter ;
+
+insert into venda (dataVenda, valorTotal, desconto, Funcionario_cpf, Cliente_cpf) 
+	value ('2024-11-28 09:52', 0.0, null, "777.888.999-00", "711.987.111-92");
+
+insert into itensvendaprod
+	values (264, 1, 5.0, 3, 0.0),
+			(264, 45, 15.0, 5, 15.0),
+            (264, 50, 10.0, 2, 5.0);
+
+insert into venda (dataVenda, valorTotal, desconto, Funcionario_cpf, Cliente_cpf) 
+	value ('2024-12-28 09:52', 0.0, null, "777.888.999-00", "711.987.111-92");
+
+insert into itensvendaprod
+	values (265, 1, 5.0, 3, 0.0),
+			(265, 45, 15.0, 5, 15.0),
+            (265, 50, 10.0, 2, 5.0);
+
+
