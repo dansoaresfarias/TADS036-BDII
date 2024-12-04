@@ -766,7 +766,8 @@ for each row
 			set quantidade = quantidade - new.quantidade
 				where idProduto = new.Produto_idProduto;
 		update venda
-			set valorTotal = valorTotal + (new.valorDeVenda * new.quantidade) - new.descontoProd
+			set valorTotal = valorTotal + 
+				(new.valorDeVenda * new.quantidade) - new.descontoProd
 				where idVenda = new.Venda_idVenda;
     end $$
 delimiter ;
@@ -786,5 +787,74 @@ insert into itensvendaprod
 	values (265, 1, 5.0, 3, 0.0),
 			(265, 45, 15.0, 5, 15.0),
             (265, 50, 10.0, 2, 5.0);
+
+insert into venda (dataVenda, valorTotal, desconto, Funcionario_cpf, Cliente_cpf) 
+	value ('2024-12-04 10:49', 0.0, 0.0, "777.888.999-00", "711.987.111-92");
+
+insert into itensvendaprod
+	values (267, 2, 7.0, 4, 7.0),
+			(267, 3, 15.0, 2, 10.0),
+            (267, 4, 10.0, 3, 0.0),
+            (267, 5, 8.0, 5, 0.0),
+            (267, 6, 9.0, 2, 9.0);
+            
+delimiter $$
+create trigger trg_aft_delete_itensvendaprod after delete
+on itensvendaprod
+for each row
+	begin
+		update produto
+			set quantidade = quantidade + old.quantidade
+				where idProduto = old.Produto_idProduto;
+		update venda
+			set valorTotal = valorTotal - 
+								(old.valorDeVenda * old.quantidade - old.descontoProd)
+				where idVenda = old.Venda_idVenda;
+    end $$
+delimiter ;
+
+delete from itensvendaprod
+	where Venda_idVenda = 267 and Produto_idProduto = 3;
+
+delimiter $$
+create trigger trg_aft_update_itensvendaprod after update
+on itensvendaprod
+for each row
+	begin
+		if(new.quantidade - old.quantidade > 0) then
+			update produto
+				set quantidade = quantidade - (new.quantidade - old.quantidade)
+					where idProduto = new.Produto_idProduto;
+			update venda
+				set valorTotal = valorTotal + 
+							(new.valorDeVenda * (new.quantidade - old.quantidade) 
+								- new.descontoProd)                             
+					where idVenda = new.Venda_idVenda;
+		else 
+			update produto
+				set quantidade = quantidade + (old.quantidade - new.quantidade)
+					where idProduto = old.Produto_idProduto;
+			update venda
+				set valorTotal = valorTotal - 
+									(old.valorDeVenda * (old.quantidade - new.quantidade) 
+										- old.descontoProd)
+					where idVenda = old.Venda_idVenda;
+		end if;
+    end $$
+delimiter ;
+
+insert into itensvendaprod
+	values (267, 2, 7.0, 4, 7.0),
+            (267, 4, 10.0, 3, 0.0),
+            (267, 5, 8.0, 5, 0.0),
+            (267, 6, 9.0, 2, 9.0);
+
+update itensvendaprod
+	set quantidade = 8
+		where Venda_idVenda = 267 and Produto_idProduto = 5;
+
+update itensvendaprod
+	set quantidade = 2
+		where Venda_idVenda = 267 and Produto_idProduto = 4;
 
 
